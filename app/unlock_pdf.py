@@ -30,6 +30,8 @@ async def get_countries():
 async def upload( file: UploadFile = File(...), password: str = Form(...)):    
     allowedFiles = {"application/pdf"}
     if file.content_type in allowedFiles:
+        return {"message": f"Successfuly uploaded {file.filename}"}
+'''
         try:
             contents = await file.read()
             with open(file.filename, 'wb') as f:
@@ -43,7 +45,7 @@ async def upload( file: UploadFile = File(...), password: str = Form(...)):
         pdf = Pdf.open(file.filename, password=password, allow_overwriting_input=True)
         pdf.save(file.filename)
 
-        return {"message": f"Successfuly uploaded {file.filename}"}
         # return FileResponse(file.filename)
+'''
     else:
         return { "Error": "Please upload PDF file format only."}
