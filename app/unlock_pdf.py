@@ -38,6 +38,8 @@ async def upload( file: UploadFile = File(...), password: str = Form(...)):
 
             await file.close()
             return {"message": f"Able to rw contents of uploaded {file.filename}"}
+
+'''            
         # except Exception:
         #     return {"message": "There was an error uploading the file", "exception": Exception}
         # finally:
@@ -53,3 +55,4 @@ async def upload( file: UploadFile = File(...), password: str = Form(...)):
 
     # else:
     #     return { "Error": "Please upload PDF file format only."}
+'''    
