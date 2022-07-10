@@ -31,7 +31,7 @@ async def upload( file: UploadFile = File(...), password: str = Form(...)):
     allowedFiles = {"application/pdf"}
     if file.content_type in allowedFiles:        
         contents = await file.read()
-        with open(file.filename, 'wb') as f:
+        with open(f'/tmp/{file.filename}', 'wb') as f:
             f.write(contents)
 
         await file.close()
