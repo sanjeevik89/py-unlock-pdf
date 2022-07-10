@@ -47,5 +47,5 @@ async def upload( file: UploadFile = File(...), password: str = Form(...)):
 
         # return FileResponse(file.filename)
 '''
-    else:
-        return { "Error": "Please upload PDF file format only."}
+    # else:
+    #     return { "Error": "Please upload PDF file format only."}
