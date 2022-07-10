@@ -33,13 +33,14 @@ async def upload( file: UploadFile = File(...), password: str = Form(...)):
         # return {"message": f"Successfuly uploaded {file.filename}"}
         try:
             contents = await file.read()
-            return {"message": f"Able to read contents of uploaded {file.filename}"}
-            # with open(file.filename, 'wb') as f:
-            #     f.write(contents)
+            with open(file.filename, 'wb') as f:
+                f.write(contents)
         except Exception:
             return {"message": "There was an error uploading the file", "exception": Exception}
         finally:
             await file.close()
+
+        return {"message": f"Able to rw contents of uploaded {file.filename}"}
 
         # print(f"Trying to open {file.filename} with password: {password}")
         # pdf = Pdf.open(file.filename, password=password, allow_overwriting_input=True)
