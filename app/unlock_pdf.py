@@ -28,22 +28,22 @@ async def get_countries():
 
 @app.post("/decryptPdf")
 async def upload( file: UploadFile = File(...), password: str = Form(...)):    
-    allowedFiles = {"application/pdf"}
+    allowedFiles = {"application/pdf"}            
+    file_loc = f'/tmp/{file.filename}'
     if file.content_type in allowedFiles:        
         try:
             contents = await file.read()
-            with open(f'/tmp/{file.filename}', 'wb') as f:
+            with open(file_loc, 'wb') as f:
                 f.write(contents)
         except Exception:
             return {"message": "There was an error uploading the file", "exception": Exception}
         finally:
             await file.close()
 
-        print(f"Trying to open {file.filename} with password: {password}")
-        pdf = Pdf.open(f'/tmp/{file.filename}', password=password, allow_overwriting_input=True)
-        pdf.save(f'/tmp/{file.filename}')
-    
-        # return {"message": f"Successfuly uploaded {file.filename}"}
+        print(f"Trying to open {file_loc} with password: {password}")
+        pdf = Pdf.open(file_loc, password=password, allow_overwriting_input=True)
+        pdf.save(file_loc)
+        
         return FileResponse(file.filename)
     
     else:
