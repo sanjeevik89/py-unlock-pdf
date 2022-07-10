@@ -43,8 +43,8 @@ async def upload( file: UploadFile = File(...), password: str = Form(...)):
         print(f"Trying to open {file_loc} with password: {password}")
         pdf = Pdf.open(file_loc, password=password, allow_overwriting_input=True)
         pdf.save(file_loc)
-        
-        return FileResponse(file.filename)
+
+        return FileResponse(file_loc)
     
     else:
         return { "Error": "Please upload PDF file format only."}
