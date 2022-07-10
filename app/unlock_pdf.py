@@ -30,9 +30,21 @@ async def get_countries():
 async def upload( file: UploadFile = File(...), password: str = Form(...)):    
     allowedFiles = {"application/pdf"}
     if file.content_type in allowedFiles:        
-        contents = await file.read()
-        with open(f'/tmp/{file.filename}', 'wb') as f:
-            f.write(contents)
+        try:
+            contents = await file.read()
+            with open(f'/tmp/{file.filename}', 'wb') as f:
+                f.write(contents)
+        except Exception:
+            return {"message": "There was an error uploading the file", "exception": Exception}
+        finally:
+            await file.close()
 
-        await file.close()
-        return {"message": "Able to rw contents of uploaded"}
+        print(f"Trying to open {file.filename} with password: {password}")
+        pdf = Pdf.open(f'/tmp/{file.filename}', password=password, allow_overwriting_input=True)
+        pdf.save(f'/tmp/{file.filename}')
+    
+        # return {"message": f"Successfuly uploaded {file.filename}"}
+        return FileResponse(file.filename)
+    
+    else:
+        return { "Error": "Please upload PDF file format only."}
