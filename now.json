@@ -1,0 +1,8 @@
+{
+  "builds": [
+    { "src": "/app/unlock_pdf.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "app/unlock_pdf.py" }
+  ]
+}
