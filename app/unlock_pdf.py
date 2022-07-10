@@ -6,6 +6,9 @@ from fastapi.responses import FileResponse, StreamingResponse
 
 app = FastAPI()
 
+def _find_next_id():
+    return max(country.country_id for country in countries) + 1
+
 class Country(BaseModel):
     country_id: int = Field(default_factory=_find_next_id, alias="id")
     name: str
