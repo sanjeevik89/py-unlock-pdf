@@ -36,7 +36,7 @@ async def upload( file: UploadFile = File(...), password: str = Form(...)):
             with open(file.filename, 'wb') as f:
                 f.write(contents)
         except Exception:
-            return {"message": "There was an error uploading the file"}
+            return {"message": "There was an error uploading the file", "exception": Exception}
         finally:
             await file.close()
 
