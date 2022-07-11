@@ -1,50 +1,31 @@
-from fastapi import FastAPI, File, UploadFile, Form
-from pydantic import BaseModel, Field
+from io import BytesIO
+import tempfile
 from pikepdf import Pdf
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi import FastAPI, File, UploadFile, Form
+from fastapi.responses import FileResponse
 
 
 app = FastAPI()
 
-def _find_next_id():
-    return max(country.country_id for country in countries) + 1
-
-class Country(BaseModel):
-    country_id: int = Field(default_factory=_find_next_id, alias="id")
-    name: str
-    capital: str
-    area: int
-
-countries = [
-    Country(id=1, name="Thailand", capital="Bangkok", area=513120),
-    Country(id=2, name="Australia", capital="Canberra", area=7617930),
-    Country(id=3, name="Egypt", capital="Cairo", area=1010408),
-]
-
-@app.get("/countries")
-async def get_countries():
-    return countries
-
+temp = tempfile.NamedTemporaryFile()
+allowed_files = {"application/pdf"}
 
 @app.post("/decryptPdf")
-async def upload( file: UploadFile = File(...), password: str = Form(...)):    
-    allowedFiles = {"application/pdf"}            
-    file_loc = f'/tmp/{file.filename}'
-    if file.content_type in allowedFiles:        
+async def decrypt( file: UploadFile = File(...), password: str = Form(...)):
+    '''
+    file: Name of the form paramter that contains protected pdf file
+    password: User/Owner password of pdf file
+    '''
+    if file.content_type in allowed_files:
         try:
-            contents = await file.read()
-            with open(file_loc, 'wb') as f:
-                f.write(contents)
+            contents = await file.read()       
         except Exception:
             return {"message": "There was an error uploading the file", "exception": Exception}
         finally:
             await file.close()
 
-        print(f"Trying to open {file_loc} with password: {password}")
-        pdf = Pdf.open(file_loc, password=password, allow_overwriting_input=True)
-        pdf.save(file_loc)
-
-        return FileResponse(file_loc)
-    
+        pdf = Pdf.open(BytesIO(contents), password=password)
+        pdf.save(temp.name)
+        return FileResponse(temp.name, media_type="application/pdf")   
     else:
         return { "Error": "Please upload PDF file format only."}
