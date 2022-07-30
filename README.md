@@ -1,8 +1,8 @@
 # FastAPI Zeit Now
 
-Deploy a [FastAPI] app as a [Zeit] Serverless Function.
+Deploy a [FastAPI] app as a [Vercel] Serverless Function.
 
-This repo deploys the [FastAPI SQL Databases Tutorial] to demonstrate how a FastAPI app can be deployed using the Zeit 
+This repo deploys the [FastAPI PDF unlocker Service] to demonstrate how a FastAPI app can be deployed using the Vercel 
 [Asynchronous Server Gateway Interface (ASGI)].
 
 **_View the live demo at: [https://fastapi-zeit-now.paul121.now.sh/?name=GithubUser](https://fastapi-zeit-now.paul121.now.sh/?name=GithubUser)_**
