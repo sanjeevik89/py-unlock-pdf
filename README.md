@@ -9,7 +9,7 @@ This deployed a ASGI app using Fast API framework as a serverless vercel functio
 
 ## Folder Structure
 ```
-├── app/
+├── api/
 │   ├── __init__.py
 │   ├── pdf_ops.py         # FastAPI app and endpoints
 │   ├── test_pdf_ops.py    # Pytest-based tests for endpoints
@@ -47,14 +47,14 @@ This deployed a ASGI app using Fast API framework as a serverless vercel functio
    ```
 2. Run the FastAPI app:
    ```bash
-   uvicorn app.pdf_ops:app --reload
+   uvicorn api.pdf_ops:app --reload
    ```
 3. Access the API docs at [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ### Testing
 Run all tests with:
 ```bash
-pytest app/test_pdf_ops.py
+pytest api/test_pdf_ops.py
 ```
 
 ## Deployment

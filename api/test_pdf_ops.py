@@ -1,7 +1,7 @@
 import os
 import pytest
 from fastapi.testclient import TestClient
-from app.pdf_ops import app
+from api.pdf_ops import app
 
 client = TestClient(app)
 
