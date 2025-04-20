@@ -1,6 +1,6 @@
 {
   "functions": {
-    "app/pdf_ops.py": { "runtime": "python@3.12" }
+    "app/pdf_ops.py": { "runtime": "@vercel/python@3.1.7"}
   },
   "rewrites": [
     { "source": "/(.*)", "destination": "app/pdf_ops.py" }
