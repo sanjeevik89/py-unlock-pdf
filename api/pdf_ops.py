@@ -2,13 +2,24 @@ from io import BytesIO
 import tempfile
 from pikepdf import Pdf, PasswordError
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, PlainTextResponse
 
 
 app = FastAPI()
 
 temp = tempfile.NamedTemporaryFile()
 allowed_files = {"application/pdf"}
+
+@app.get("/")
+def root():
+    return PlainTextResponse(
+        """
+This API provides endpoints to unlock (decrypt) password-protected PDF files and compress PDF files.
+
+POST /decryptPdf: Remove password protection from a PDF file. Requires a PDF file and the password.
+POST /compressPdf: Compress a PDF file to reduce its size. Requires a PDF file.
+"""
+    )
 
 @app.post("/decryptPdf")
 async def decrypt( file: UploadFile = File(...), password: str = Form(...)):
