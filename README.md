@@ -1,6 +1,7 @@
 # py-unlock-pdf
 
 A FastAPI-based service for unlocking (decrypting) password-protected PDF files and compressing PDF files. This project provides API endpoints to remove passwords from PDFs and reduce PDF file sizes, suitable for deployment on Vercel or other serverless platforms.
+This deployed a ASGI app using Fast API framework as a serverless vercel function.
 
 ## Features
 - **/decryptPdf**: Remove password protection from PDF files by providing the correct password.
